@@ -45,21 +45,8 @@ public class YetAnotherBikeShedder {
             ResponseEntity<Information> response = restTemplate.exchange("https://gbfs.urbansharing.com/oslobysykkel.no/station_information.json", HttpMethod.GET, entity, Information.class);
             Information info = response.getBody();
 
-//            Information info =
-//                    restTemplate.getForObject("https://gbfs.urbansharing.com/oslobysykkel.no/station_information.json"
-//                            , Information.class);
-
-
-//                .header("Client-Identifier", "boerta-yabs.YetAnotherBikeShedder")
-
             ResponseEntity<Status> response2 = restTemplate.exchange("https://gbfs.urbansharing.com/oslobysykkel.no/station_status.json", HttpMethod.GET, entity, Status.class);
             Status status = response2.getBody();;
-
-//            Status status = restTemplate.getForObject("https://gbfs.urbansharing.com/oslobysykkel.no/station_status.json"
-//                    , Status.class);
-
-//                .header("Client-Identifier", "boerta-yabs.YetAnotherBikeShedder")
-
 
             Map<String, StationStatus> statusMap =
                     status.getData().getStations().stream().collect(Collectors.toMap(StationStatus::getStationId, Function.identity()));
