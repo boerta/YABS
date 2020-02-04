@@ -11,7 +11,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import yabs.station.Merged;
 import yabs.station.information.Information;
 import yabs.station.information.StationInformation;
 import yabs.station.status.StationStatus;
@@ -46,18 +45,24 @@ public class YetAnotherBikeShedder {
             Information info = response.getBody();
 
             ResponseEntity<Status> response2 = restTemplate.exchange("https://gbfs.urbansharing.com/oslobysykkel.no/station_status.json", HttpMethod.GET, entity, Status.class);
-            Status status = response2.getBody();;
+            Status status = response2.getBody();
 
             Map<String, StationStatus> statusMap =
                     status.getData().getStations().stream().collect(Collectors.toMap(StationStatus::getStationId, Function.identity()));
 
             for (StationInformation item : info.getData().getStations()) {
-                if (!statusMap.containsKey(item.getStationId())) {
-
-                }
-                Merged m = Merged.merge(item, statusMap.get(item.getStationId()));
-                System.out.println(m.toString());
+                printInfo(item, statusMap.get(item.getStationId()));
             }
         };
     }
+
+    private void printInfo(StationInformation item, StationStatus stationStatus) {
+        System.out.print(item.toString());
+        if(stationStatus == null) {
+            System.out.println("Mangler statusinformasjon!");
+        } else {
+            System.out.println(stationStatus.toString());
+        }
+    }
+
 }

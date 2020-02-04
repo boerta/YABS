@@ -12,4 +12,10 @@ public class StationInformation {
     private String name;
     private String stationId;
 
+    public String toString() {
+        return name + ", " + address +
+                "\n\tkapasitet: " + capacity +
+                "\n\t";
+    }
+
 }

@@ -16,4 +16,9 @@ public class StationStatus {
     private long numDocksAvailable;
     private String stationId;
 
+    public String toString() {
+        return "ledige sykler: " + numBikesAvailable +
+        "\n\tledige låser: " + numDocksAvailable + "\n";
+    }
+
 }
